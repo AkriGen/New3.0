@@ -1,0 +1,107 @@
+.cen{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(45deg, #007bff, #6c757d);
+  color: white;
+}
+.navbar a.navbar-brand {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar .btn {
+  color: white;
+  border-color: white;
+}
+.navbar .btn:hover {
+  background-color: white;
+  color: #007bff;
+}
+
+/* Cards */
+.card {
+  border: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 200px;
+}
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+.card .card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.card h1 i {
+  font-size: 3rem;
+  color: #007bff;
+}
+.card a.btn {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+.btn-primary:hover,
+.btn-success:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card h1 i {
+    font-size: 2.5rem;
+  }
+  .card .card-title {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 576px) {
+  .navbar .navbar-brand {
+    font-size: 1rem;
+  }
+  .navbar .btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+  .cen{
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+
+
+  .card h1 i {
+    font-size: 2rem;
+  }
+  .card .card-title {
+    font-size: 0.9rem;
+  }
+  .card a.btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+}

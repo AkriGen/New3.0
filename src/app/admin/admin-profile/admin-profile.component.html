@@ -1,0 +1,16 @@
+<div class="container mt-4">
+  <h2 class="text-center">Admin Profile</h2>
+
+  <div class="card mx-auto mt-4" style="max-width: 500px;">
+    <div class="card-body">
+      <h5 class="card-title">Profile Details</h5>
+      
+      <!-- Display profile data -->
+      
+      <p><strong>Username:</strong> {{ currentAdmin.Username }}</p>
+      <p><strong>Email:</strong> {{ currentAdmin.Email }}</p>
+
+      <!-- Password display, hide the actual password for security -->
+      <p><strong>Password:</strong> {{currentAdmin.Password}}</p> <!-- Hide the password in the profile view -->
+    </div>
+  </div>

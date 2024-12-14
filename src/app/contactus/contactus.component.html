@@ -1,0 +1,60 @@
+<!-- contact.component.html -->
+<section class="contact">
+    <div class="content">
+      <h1>Contact Us</h1>
+      <p>We'd love to hear from you! Whether you have questions, feedback, or just want to share your love for nature we're here to help.</p>
+    </div>
+    
+    <div class="container">
+      <div class="contactInfo">
+        <div class="box">
+          <div class="icon"><i class="fa-regular fa-address-book"></i></div>
+          <div class="text">
+            <h3>Address</h3>
+            <p>4671 Sugar campRoad,<br>Owatona, Minnesota,<br>55060</p>
+          </div>
+        </div>
+        
+        <div class="box">
+          <div class="icon"><i class="fa-solid fa-phone"></i></div>
+          <div class="text">
+            <h3>Phone</h3>
+            <p>507-475-6094</p>
+          </div>
+        </div>
+  
+        <div class="box">
+          <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+          <div class="text">
+            <h3>Email</h3>
+            <p>wrub7di0</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="contactForm">
+        <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+          <h2>Send Message</h2>
+  
+          <div class="inputBox">
+            <input type="text" name="fullName" [(ngModel)]="formData.fullName" required="required">
+            <span>Full Name</span>
+          </div>
+  
+          <div class="inputBox">
+            <input type="email" name="email" [(ngModel)]="formData.email" required="required">
+            <span>Email</span>
+          </div>
+  
+          <div class="inputBox">
+            <textarea name="message" [(ngModel)]="formData.message" required="required"></textarea>
+            <span>Type your Message...</span>
+          </div>
+  
+          <div class="inputBox">
+            <button type="submit">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>

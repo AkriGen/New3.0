@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>{{ isEditMode ? 'Edit Health Tip' : 'Add New Health Tip' }}</h2>
+  
+    <form (ngSubmit)="onSubmit()">
+      <!-- Tip Title Field -->
+      <div class="form-group">
+        <label for="tipTitle">Tip Title</label>
+        <input type="text" id="tipTitle" class="form-control" [(ngModel)]="healthTip.TipTitle" name="tipTitle" required />
+      </div>
+  
+      <!-- Tip Description Field -->
+      <div class="form-group">
+        <label for="tipDescription">Description</label>
+        <textarea id="tipDescription" class="form-control" [(ngModel)]="healthTip.TipDescription" name="tipDescription" required></textarea>
+      </div>
+  
+      <!-- Category ID Field -->
+      <div class="form-group">
+        <label for="categoryId">Category ID</label>
+        <input type="number" id="categoryId" class="form-control" [(ngModel)]="healthTip.CategoryId" name="categoryId" required />
+      </div>
+  
+      <!-- Health Tip Image Field -->
+      <div class="form-group">
+        <label for="healthTipImage">Health Tip Image</label>
+        <input type="file" id="healthTipImage" class="form-control" (change)="onFileSelect($event)" />
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary mt-3">{{ isEditMode ? 'Update Health Tip' : 'Add Health Tip' }}</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,12 @@
+<!-- Popup Modal (Toaster Style) -->
+<div class="popup-overlay" *ngIf="showPopup">
+  <div class="popup-content">
+    <h2>Please Log In</h2>
+    <p>Login for seemless experience</p>
+    <div class="popup-buttons">
+      <button class="close-btn" (click)="onClose()">Close</button>
+      <button class="remind-btn" (click)="remindMeLater()">Remind Me Later</button>
+      <button class="remind-btn" routerLink="/signup">Click to Signup</button>
+    </div>
+  </div>
+</div>

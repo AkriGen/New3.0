@@ -1,0 +1,105 @@
+/* Popup Overlay - Positioned Fixed and Centered */
+.popup-overlay {
+    position: fixed;
+    top: 50%; /* Position vertically centered */
+    left: 50%; /* Position horizontally centered */
+    transform: translate(-50%, -50%); /* Adjust position to truly center */
+    width: 100%; /* Full width on mobile */
+    max-width: 400px; /* Limit the max width */
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Soft shadow for better visibility */
+    z-index: 9999; /* Ensure the popup is on top */
+    opacity: 1;
+    transition: all 0.3s ease; /* Smooth transition for appearance */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Popup Content Area */
+  .popup-content {
+    padding: 20px;
+    background: #333; /* Dark background for the content */
+    border-radius: 8px; /* Rounded corners for content */
+    text-align: center;
+    color: #fff;
+  }
+  
+  .popup-content h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .popup-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  /* Popup Buttons Styling */
+  .popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .popup-buttons button {
+    padding: 12px 18px;
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1; /* Make buttons take equal space */
+  }
+  
+  .popup-buttons button:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+  }
+  
+  /* Specific Button Styles */
+  .popup-buttons .close-btn {
+    background-color: #dc3545; /* Red for Close */
+  }
+  
+  .popup-buttons .close-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+  
+  .popup-buttons .remind-btn {
+    background-color: #ffc107; /* Yellow for Remind Later */
+  }
+  
+  .popup-buttons .remind-btn:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+  }
+  
+  /* Mobile Responsiveness - Smaller screens */
+  @media (max-width: 600px) {
+    .popup-overlay {
+      width: 90%; /* Full width on mobile */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* Keep it centered */
+    }
+  
+    .popup-content {
+      padding: 15px; /* Reduce padding on small screens */
+    }
+  
+    .popup-buttons {
+      flex-direction: column; /* Stack buttons vertically on small screens */
+      gap: 10px; /* Space between buttons */
+    }
+  
+    .popup-buttons button {
+      width: 100%; /* Make buttons full width on mobile */
+      padding: 12px; /* Bigger padding for easier clicks */
+    }
+  }
+  
+  

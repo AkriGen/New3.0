@@ -1,0 +1,22 @@
+<div class="login-container">
+    <h2>User Login</h2>
+    <form (submit)="login()">
+        
+      <div>
+        <label for="username">Username:</label>
+        <input id="username" [(ngModel)]="username" name="username" required />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" [(ngModel)]="email" name="email" required />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" type="password" [(ngModel)]="password" name="password" required />
+      </div>
+      <button type="submit">Login</button>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </form>
+    <a href="login">Login as Admin</a>
+  </div>
+  
