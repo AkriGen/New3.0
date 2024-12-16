@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CreateHealthTipDTO, ReadHealthTipDTO, UpdateHealthTipDTO } from '../../models/health-tips-dto.Model';
 import { HealthTipsService } from '../../admin-services/health-tips.service';
+import { ToastrServiceWrapper } from '../../toastr.service';
 
 @Component({
   selector: 'app-admin-health-tip-form',
@@ -21,11 +22,18 @@ export class AdminHealthTipFormComponent implements OnInit {
 
   isEditMode: boolean = false;
   healthTipId: number | null = null;
-
+  // Error messages for validation
+  errorMessages: { [key: string]: string } = {
+    TipTitle: '',
+    TipDescription: '',
+    CategoryId: '',
+  };
   constructor(
     private healthTipsService: HealthTipsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+        private toastr: ToastrServiceWrapper,
+        
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +67,9 @@ export class AdminHealthTipFormComponent implements OnInit {
 
   // Handle form submission (for both adding and updating a health tip)
   onSubmit(): void {
+    if (!this.validateForm()) {
+      return;
+    }
     if (this.isEditMode && this.healthTipId !== null) {
       // Prepare the UpdateHealthTipDTO
       const updateHealthTipDTO: UpdateHealthTipDTO = {
@@ -72,7 +83,7 @@ export class AdminHealthTipFormComponent implements OnInit {
       // Call update service method
       this.healthTipsService.updateHealthTip(updateHealthTipDTO).subscribe(
         (response) => {
-          console.log('Health tip updated successfully:', response);
+          this.toastr.success('Health tip updated successfully:', 'Success');
           this.router.navigate(['/admin-health-tips']); // Navigate back to the health tips list
         },
         (error) => {
@@ -91,7 +102,7 @@ export class AdminHealthTipFormComponent implements OnInit {
       // Call add service method
       this.healthTipsService.addHealthTip(createHealthTipDTO).subscribe(
         (response: ReadHealthTipDTO) => {
-          console.log('Health tip added successfully:', response);
+          this.toastr.success('Health tip addedd successfully:', 'Success');
           this.router.navigate(['/admin-health-tips']); // Navigate back to the health tips list
         },
         (error) => {
@@ -108,4 +119,36 @@ export class AdminHealthTipFormComponent implements OnInit {
       this.healthTip.HealthTipsimg = file; // Set the selected image file to healthTip
     }
   }
+  // Validate form inputs
+  validateForm(): boolean {
+    let isValid = true;
+
+    // Reset error messages
+    this.errorMessages = {
+      TipTitle: '',
+      TipDescription: '',
+      CategoryId: '',
+    };
+    if (!(this.healthTip as CreateHealthTipDTO).TipTitle) {
+      this.errorMessages['TipTitle'] = 'Title is required.';
+      isValid = false;
+    }
+
+    if (!(this.healthTip as CreateHealthTipDTO).TipDescription) {
+      this.errorMessages['TipDescription'] = 'Description is required.';
+      isValid = false;
+    }
+
+    if (
+      !(this.healthTip as CreateHealthTipDTO).CategoryId ||
+      (this.healthTip as CreateHealthTipDTO).CategoryId < 1 ||
+      (this.healthTip as CreateHealthTipDTO).CategoryId > 5
+    ) {
+      this.errorMessages['CategoryId']= 'Category must be between 1 and 5.';
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
 }

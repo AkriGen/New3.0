@@ -1,21 +1,37 @@
-.cen{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* General adjustments */
+.cen {
+  height: 100vh;
+  padding-top: 70px; /* Ensures content doesn't overlap with the navbar */
+  position: relative;
+}
+
+/* Fixed Logout Button */
+.log {
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  position: fixed; /* Ensures it remains at the top-right corner */
 }
 
 /* Navbar */
 .navbar {
   background: linear-gradient(45deg, #007bff, #6c757d);
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 .navbar a.navbar-brand {
   color: white;
   font-weight: bold;
   font-size: 1.5rem;
 }
-
 .navbar .btn {
   color: white;
   border-color: white;
@@ -30,7 +46,8 @@
   border: none;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 200px;
+  margin-bottom: 1rem;
+  height: 250px; /* Increased for consistency */
 }
 .card:hover {
   transform: translateY(-10px);
@@ -73,6 +90,7 @@
     font-size: 1rem;
   }
 }
+
 @media (max-width: 576px) {
   .navbar .navbar-brand {
     font-size: 1rem;
@@ -81,15 +99,11 @@
     font-size: 0.8rem;
     padding: 5px 10px;
   }
-  .cen{
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .log {
+    margin: 0;
+    font-size: 1rem; /* Scaled down for smaller screens */
+     
   }
-  
-
-
   .card h1 i {
     font-size: 2rem;
   }
@@ -100,7 +114,6 @@
     font-size: 0.8rem;
     padding: 5px 10px;
   }
-
   .container {
     padding: 0 10px;
   }

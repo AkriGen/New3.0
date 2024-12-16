@@ -8,6 +8,7 @@ import { HealthTipsService } from '../../admin-services/health-tips.service';
 @Component({
   selector: 'app-admin-health-tips',
   templateUrl: './admin-health-tips.component.html',
+  styleUrls: ['./admin-health-tips.component.css'],
   imports:[FormsModule,CommonModule],
 })
 export class AdminHealthTipsComponent implements OnInit {

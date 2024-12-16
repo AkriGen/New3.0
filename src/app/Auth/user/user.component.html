@@ -1,80 +1,19 @@
-<div class="container">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2 class="sidebar-title">User Dashboard</h2>
-    <ul class="sidebar-nav">
-      <li [class.active]="activeTab === 0" (click)="setTab(0)">Profile</li>
-      <li [class.active]="activeTab === 1" (click)="setTab(1)">Saved Addresses</li>
-      <li (click)="logout()">Logout</li>
-    </ul>
+<div class="dashboard-container">
+  <h2>User Dashboard</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
   </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <h1 class="animated-heading">Welcome, {{ user?.userName }}</h1>
+  <!-- User Data -->
+  <div *ngIf="userData" class="user-card">
+    <h3>Welcome, {{ userData.UserName }}</h3>
+    <p><strong>Email:</strong> {{ userData.Email }}</p>
+  </div>
 
-    <!-- Profile Tab -->
-    <div *ngIf="activeTab === 0 && isEditing; else displayProfile" class="tab-content">
-      <form (ngSubmit)="updateUserProfile()">
-        <div>
-          <label for="userName">Username</label>
-          <input type="text" [(ngModel)]="userProfile.userName" name="userName" required />
-        </div>
-  
-        <div>
-          <label for="email">Email</label>
-          <input type="email" [(ngModel)]="userProfile.email" name="email" required />
-        </div>
-  
-        <div class="form-group">
-          <label for="userImage">Profile Image</label>
-          <input
-            id="userImage"
-            type="file"
-            (change)="onFileSelected($event)"
-            accept="image/*"
-            class="form-control"
-          />
-        </div>
-    
-  
-        <button type="submit">Update Profile</button>
-        <button type="button" (click)="cancelEdit()">Cancel</button>
-      </form>
-    </div>
-    <!-- Profile Display -->
-  <ng-template #displayProfile>
-    <p><strong>Username:</strong> {{ user?.userName }}</p>
-    <p><strong>Email:</strong> {{ userProfile?.email }}</p>
-    <p><strong>User Image:</strong> <img [src]="userProfile?.userImage" alt="User Image" width="50" height="50"></p>
-
-    <button (click)="startEditing()">Edit Profile</button>
-  </ng-template>
-      <!-- Edit Profile
-      <button *ngIf="!isEditMode" (click)="toggleEditMode()" class="edit-button">Edit Profile</button>
-      <form *ngIf="isEditMode" class="edit-form" (ngSubmit)="updateUser()">
-        <label for="userName">Name</label>
-        <input type="text" id="userName" [(ngModel)]="user.userName" name="userName" required />
-
-        <label for="email">Email</label>
-        <input type="email" id="email" [(ngModel)]="user.email" name="email" required />
-
-        <label for="userImage">Profile Image</label>
-        <input type="file" id="userImage" (change)="onFileChange($event)" />
-
-        <button type="submit" class="save-button">Save Changes</button>
-        <button type="button" (click)="toggleEditMode()" class="cancel-button">Cancel</button>
-      </form>
-    </div> -->
-
-    <!-- Saved Addresses Tab -->
-    <div *ngIf="activeTab === 1" class="tab-content">
-      <h2>Saved Addresses</h2>
-      <ul>
-        <!-- <li *ngFor="let address of savedAddresses">
-          {{ address.street }}, {{ address.city }}, {{ address.state }}, {{ address.country }}
-        </li> -->
-      </ul>
-    </div>
+  <!-- Loading State -->
+  <div *ngIf="!userData && !errorMessage" class="loading">
+    <p>Loading your profile...</p>
   </div>
 </div>

@@ -17,7 +17,7 @@ export class BookmarkComponent implements OnInit {
     this.bookmarks = this.bookmarkService.getBookmarks();
   }
   // Remove card from bookmarks
-  removeBookmark(card: { RemedyId:number,RemedyName:string,Remediesimg:string,Description:string,Benefits:string,PreperationMethod:string,UsageInstructions:string,CategoryId:number,createdBy:string,category:string }): void {
+  removeBookmark(card: { RemedyId:number,RemedyName:string,Remediesimg:File,Description:string,Benefits:string,PreperationMethod:string,UsageInstructions:string,CategoryId:number }): void {
     this.bookmarkService.removeBookmark(card);
     this.bookmarks = this.bookmarkService.getBookmarks();  // Re-fetch the bookmarks after removal
   }

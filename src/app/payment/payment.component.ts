@@ -4,13 +4,30 @@ import { PaymentService } from '../services/payment.service';
 import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AddressService } from '../services/address.service';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { ToastrServiceWrapper } from '../toastr.service';
 
 @Component({
   selector: 'app-payment',
   standalone: false,
   
   templateUrl: './payment.component.html',
-  styleUrl: './payment.component.css'
+  styleUrl: './payment.component.css',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('300ms ease-out', style({ transform: 'translateX(0)', opacity: 1 })),
+      ]),
+    ]),
+  ],
+
 })
 export class PaymentComponent implements OnInit {
   
@@ -29,7 +46,7 @@ export class PaymentComponent implements OnInit {
   selectedAddress: any = null;
   isNewAddress: boolean = false;
 
-  constructor(private addressService: AddressService,public cartService: CartService, private router: Router) {}
+  constructor(private addressService: AddressService,public cartService: CartService, private router: Router, private toastr: ToastrServiceWrapper) {}
 
   ngOnInit(): void {
     // Fetch saved addresses when the component initializes
@@ -77,10 +94,13 @@ export class PaymentComponent implements OnInit {
     if (this.selectedAddress) {
       // Here you would handle the payment logic, using the selected address
       console.log('Payment successful for shipping to:', this.selectedAddress);
+      this.toastr.error('Payment Failed', 'Error');
+
       this.router.navigate(['/successpay']);  // Navigate to the payment page
       this.cartService.clearCart();
     } else {
-      alert('Please select or enter an address for shipping.');
+      this.toastr.info('Please select or enter an address for shipping.', 'Information');
+
     }
   }
   //payment logic

@@ -1,21 +1,16 @@
-/* Container Styling */
 .container {
-    padding: 1rem;
     max-width: 100%;
+    margin: auto;
+    padding: 1rem;
   }
   
-  /* Table Wrapper */
-  .table-responsive {
-    border-radius: 15px;
-    overflow: hidden;
-  }
   h2 {
     font-family: 'Poppins', sans-serif;
     font-size: 2rem;
     font-weight: 600;
     color: #333;
   }
-  /* Table Styles */
+  
   .table {
     border-collapse: separate;
     border-spacing: 0;
@@ -26,53 +21,42 @@
     color: #fff;
   }
   
+  .table-responsive {
+    overflow-x: auto;
+  }
   
-  /* Image Styling */
-  .remedy-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
+  .table img {
     border-radius: 8px;
   }
   
-  /* Button Styling */
   button {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
-    .remedy-image {
-      width: 60px;
-      height: 60px;
-    }
-  
-    .table thead {
+    table {
       font-size: 0.9rem;
     }
   
-    .table tbody {
-      font-size: 0.8rem;
+    img {
+      width: 70px;
+      height: 70px;
     }
   }
   
   @media (max-width: 576px) {
-    .table {
+    table {
       font-size: 0.8rem;
-    }
-  
-    .remedy-image {
-      width: 50px;
-      height: 50px;
     }
   
     button {
       font-size: 0.8rem;
+      padding: 0.4rem;
     }
   }
   

@@ -41,9 +41,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  HttpClient, HttpClientModule } from '@angular/common/http';
 import { UserloginComponent } from './auth/userlogin/userlogin.component';
 import { PaysuccessfullComponent } from './paysuccessfull/paysuccessfull.component';
+import {  ToastrServiceWrapper } from './toastr.service';
+import { ToastrModule } from 'ngx-toastr';
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
 }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +88,7 @@ export function tokenGetter() {
     MatListModule,
     FormsModule,
     CommonModule,
+    ToastrModule.forRoot(),    // Import ToastrModule
     HttpClientModule, 
     JwtModule.forRoot({
       config: {
@@ -95,6 +99,7 @@ export function tokenGetter() {
     })
   ],
   providers: [
+    [ToastrServiceWrapper],
     provideAnimationsAsync(),
     [AuthGuard]
   ],

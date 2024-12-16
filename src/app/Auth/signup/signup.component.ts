@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } 
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AutharizeService } from '../../services/autharize.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -16,12 +17,12 @@ export class SignupComponent {
   signupForm: FormGroup;
   selectedImage: File | null = null;
   validationErrors: string[] = [];
-
+  errorMessage:string='';
   constructor(private fb: FormBuilder, private authService: AutharizeService, private router: Router) {
     this.signupForm = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      userName: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20), Validators.pattern("^[a-zA-Z]+[a-zA-Z ]{4,20}$")]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z]+[a-zA-Z0-9]*@[a-zA-Z]+\.[a-zA-Z]+$")]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern("^[a-zA-Z]+[a-zA-Z0-9]{8,}$")]],
       confirmPassword: ['', Validators.required],
     }, { validators: this.passwordsMatchValidator });
   }
@@ -33,12 +34,7 @@ export class SignupComponent {
     return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.selectedImage = input.files[0];
-    }
-  }
+  
 
   signup(): void {
     this.validationErrors = [];
@@ -54,27 +50,56 @@ export class SignupComponent {
     formData.append('UserName', userName);
     formData.append('Email', email);
     formData.append('Password', password);
-    if (this.selectedImage) {
-      formData.append('UserImage', this.selectedImage);
-    }
+    
 
     this.authService.signupWithImage(formData).subscribe(
       (response) => {
-        console.log('Signup successful:', response);
-        this.router.navigate(['/userlogin']);
-      },
+        // console.log('Signup successful:', response);
+        Swal.fire({
+                               title: 'Success!',
+                               text: 'Your credentials created successfully',
+                               icon: 'success',
+                               confirmButtonText: 'Login Now'
+                     }).then((result) => {
+                       if (result.isConfirmed) {
+                         this.router.navigate(['/userlogin']); // Redirect to home after user clicks "OK"
+                       }
+                     });
+                   },
+
       (error) => {
-        console.error('Signup failed:', error);
-        if (error.error && error.error.message) {
-          this.validationErrors.push(error.error.message);
-        }
-      }
-    );
+                if (error.error && error.error.message) {
+                         this.errorMessage = error.error.message;
+                       } else if (error.status === 400) {
+                         this.errorMessage = 'Username or Email already exist. Please try again.';
+                         Swal.fire({
+                          title: 'Error!',
+                          text: this.errorMessage,
+                          icon: 'error',
+                          confirmButtonText: 'Retry'
+                        });
+                       } else if (error.status === 500) {
+                         this.errorMessage = 'Server error. Please try again later.';
+                         Swal.fire({
+                          title: 'Error!',
+                          text: this.errorMessage,
+                          icon: 'error',
+                          confirmButtonText: 'Retry'
+                        });
+                       } else {
+                         this.errorMessage = 'An unexpected error occurred. Please try again.';
+                         
+                       }
+                       console.error('Error logging in:', error);
+                       Swal.fire({
+                         title: 'Error!',
+                         text: this.errorMessage,
+                         icon: 'error',
+                         confirmButtonText: 'Retry'
+                       });
+                     } 
+          );
   }
 
-  // Email validation function
-  isValidEmail(email: string): boolean {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return emailPattern.test(email);
-  }
+  
 }

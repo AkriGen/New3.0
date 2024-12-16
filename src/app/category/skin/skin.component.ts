@@ -3,6 +3,7 @@ import { Product } from '../../product.model';
 import { FilterService } from '../../services/filter.service';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
+import { ToastrServiceWrapper } from '../../toastr.service';
 
 @Component({
   selector: 'app-skin',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 export class SkinComponent implements OnInit{
   products: Product[] = [];
 
-  constructor(private filterService: FilterService, public cartService:CartService, private router:Router) { }
+  constructor(private filterService: FilterService, private toastr: ToastrServiceWrapper, public cartService:CartService, private router:Router) { }
 
   ngOnInit(): void {
     this.fetchProducts(2);  // Assuming '1' is the categoryId for Skin
@@ -31,7 +32,7 @@ export class SkinComponent implements OnInit{
       this.cartService.addToCart(product);
       alert(`${product.ProductName} added to cart!`);
     } else {
-      console.error('Invalid product:', product); // Log if the product is invalid
+      this.toastr.error('Invalid product', 'Error');
     }
   }
   
@@ -44,7 +45,7 @@ export class SkinComponent implements OnInit{
       // Navigate to the payment page
       this.router.navigate(['/payment']);
     } else {
-      alert(`${product.ProductName} is out of stock.`);
+      this.toastr.warning(`${product.ProductName} is out of stock!`, 'Out of Stock');
     }
   }
 

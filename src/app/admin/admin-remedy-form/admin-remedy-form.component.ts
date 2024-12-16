@@ -32,7 +32,8 @@ export class AdminRemedyFormComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {}
-
+ 
+  
   ngOnInit(): void {
     // Check if we're in edit mode and load remedy details if so
     this.route.queryParams.subscribe((params) => {

@@ -53,28 +53,54 @@
 
 <div class="safe-standards">
   <div class="heading-container">
-    <div class="heading hover-effect"> Our BestSellers here</div>
+    <div class="heading hover-effect mb-5"> Our BestSellers here</div>
  </div>
   <!-- Row container to align the products in columns -->
-  <div class="row justify-content-center" >
-    <!-- Loop through the products and create a card for each one -->
-    <div class="col-sm-6 col-md-4 col-lg-3 mb-4 mt-4 " style="margin-right: 20px; " *ngFor="let product of bestSellers">
-      <div class="card standards colpro " data-aos="zoom-in" data-aos-delay="500">
-        <img [src]="product.ProductImage" class="card-img-top" style="height: 300px; width: 100%; object-fit: cover;" alt="Product Image">
+  <div class="row justify-content-center">
+    <!-- Loop through the products and display them -->
+    <div class="col-md-4 col-sm-6 col-xs-12 mb-4 animate__animated animate__fadeInUp" *ngFor="let product of products" [ngStyle]="{ 'animation-delay': '0.2s' }">
+      <div class="card glass-effect shadow-lg" [ngClass]="{'out-of-stock': product.StockQuantity <= 0}">
+        
+        <!-- Image or fallback text -->
+        <div class="product-img-container">
+          <img *ngIf="product.ProductImage" 
+            [src]="'data:image/jpeg;base64,' + product.ProductImage" 
+            class="card-img-top" alt="image not available" />
+          <span *ngIf="!product.ProductImage" class="no-image-text">No Image</span>
+        </div>
+        
         <div class="card-body">
-          <h5 class="card-title">{{ product.ProductName }}</h5>
-          <p class="card-text">{{ product.Price |currency:'INR'}}</p>
-          <div class="row">
-            <div class="col-md-8 col-sm-6 col-md-8 col-lg-6 text-center"><button class="btn btn-danger" (click)="onButtonClick(product)">Add </button>
-
-            </div>
-            <div class="col-md-4 col-sm-6 col-md-4 col-lg-6"><button class="btn btn-success" (click)="buyNow(product)">Buy </button>
-            </div>
+          <h5 class="card-title text-center">{{ product.ProductName }}</h5>
+          <p class="card-text">{{ product.Description }}</p>
+          <p class="price text-center"><strong>Price:</strong> {{ product.Price | currency: 'INR' }}</p>
+  
+          <!-- Buttons with hover effects and conditional disabling for out-of-stock products -->
+          <div class="button-group d-flex justify-content-between">
+            <button 
+              class="btn btn-primary btn-lg animate__animated animate__pulse" 
+              (click)="addToCart(product)" 
+              [disabled]="product.StockQuantity <= 0" 
+              [attr.aria-label]="'Add ' + product.ProductName + ' to cart'">
+              Add to Cart
+            </button>
+            <button 
+              class="btn btn-success btn-lg animate__animated animate__pulse" 
+              (click)="buyNow(product)" 
+              [disabled]="product.StockQuantity <= 0" 
+              [attr.aria-label]="'Buy ' + product.ProductName + ' now'">
+              Buy Now
+            </button>
+          </div>
+  
+          <!-- Out of stock indicator -->
+          <div *ngIf="product.StockQuantity <= 0" class="out-of-stock-label">
+            <p class="text-center text-danger">Out of Stock</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+  
 </div>
 
 <div class="safe-standards">

@@ -3,6 +3,7 @@ import { Product } from '../../product.model';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { FilterService } from '../../services/filter.service';
+import { ToastrServiceWrapper } from '../../toastr.service';
 
 @Component({
   selector: 'app-digestion',
@@ -14,7 +15,7 @@ import { FilterService } from '../../services/filter.service';
 export class DigestionComponent implements OnInit{
   products: Product[] = [];
 
-  constructor(private filterService: FilterService, public cartService:CartService, private router:Router) { }
+  constructor(private filterService: FilterService, private toastr: ToastrServiceWrapper, public cartService:CartService, private router:Router) { }
 
   ngOnInit(): void {
     this.fetchProducts(5);  // Assuming '5' is the categoryId for digestion
@@ -31,7 +32,7 @@ export class DigestionComponent implements OnInit{
       this.cartService.addToCart(product);
       alert(`${product.ProductName} added to cart!`);
     } else {
-      console.error('Invalid product:', product); // Log if the product is invalid
+      this.toastr.error('Invalid product', 'Error');
     }
   }
   
@@ -44,7 +45,7 @@ export class DigestionComponent implements OnInit{
       // Navigate to the payment page
       this.router.navigate(['/payment']);
     } else {
-      alert(`${product.ProductName} is out of stock.`);
+      this.toastr.warning(`${product.ProductName} is out of stock!`, 'Out of Stock');
     }
   }
 

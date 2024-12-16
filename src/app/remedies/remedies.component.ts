@@ -29,7 +29,7 @@ export class RemediesComponent implements OnInit {
   }
 
   // Save card to bookmarks
-  bookmarkCard(card: { RemedyId: number; RemedyName: string; Remediesimg: string; Description: string; Benefits: string; PreperationMethod: string; UsageInstructions: string; CategoryId: number; createdBy: string; category: string }): void {
+  bookmarkCard(card: { RemedyId: number; RemedyName: string; Remediesimg: File; Description: string; Benefits: string; PreperationMethod: string; UsageInstructions: string; CategoryId: number; }): void {
     this.bookmarkService.addBookmark(card);
     alert(`${card.RemedyName}: Bookmarked Successfully!`);
   }

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { Router } from '@angular/router';
 import { Product } from '../product.model';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+import { ToastrServiceWrapper } from '../toastr.service';
+
 
 @Component({
   selector: 'app-product',
@@ -17,7 +20,9 @@ export class ProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrServiceWrapper  // Inject toastr service
+
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +33,8 @@ export class ProductComponent implements OnInit {
         console.log(data)
       },
       (error) => {
-        console.error('Error fetching products:', error);
+        this.toastr.error('Failed to load products', 'Error');
+
       }
     );
   }
@@ -36,9 +42,13 @@ export class ProductComponent implements OnInit {
   addToCart(product: Product) {
     if (product && product.ProductId) {
       this.cartService.addToCart(product);
-      alert(`${product.ProductName} added to cart!`);
+      this.toastr.success(`${product.ProductName} added to cart!`);  // Show success toast
+
+     
     } else {
       console.error('Invalid product:', product);
+      this.toastr.error('Failed to add product to cart', 'Error');
+
     }
   }
 
@@ -47,7 +57,8 @@ export class ProductComponent implements OnInit {
       this.cartService.addToCart(product);
       this.router.navigate(['/payment']);
     } else {
-      alert(`${product.ProductName} is out of stock.`);
+      this.toastr.warning(`${product.ProductName} is out of stock!`, 'Out of Stock');
+
     }
   }
 }

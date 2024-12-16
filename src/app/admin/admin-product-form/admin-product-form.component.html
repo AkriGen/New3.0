@@ -1,38 +1,141 @@
-<div class="container">
-    <h2>{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
-  
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="productName">Product Name</label>
-        <input type="text" id="productName" class="form-control" [(ngModel)]="product.ProductName" name="productName" required />
+<div class="container mt-4 animate__animated animate__fadeIn">
+  <h2 class="text-center mb-4">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+
+  <!-- Product Form -->
+  <form #productForm="ngForm" (ngSubmit)="onSubmit()" class="form-card shadow-lg p-4 rounded">
+
+    <!-- Product Name -->
+    <div class="form-group mb-3">
+      <label for="productName" class="form-label">Product Name</label>
+      <input
+        type="text"
+        id="productName"
+        class="form-control"
+        [(ngModel)]="product.ProductName"
+        name="productName"
+        required
+        minlength="5"
+        pattern="^[a-zA-Z]+[a-zA-Z ]+$"
+        #productName="ngModel"
+        placeholder="Enter product name"
+      />
+      <!-- Error Messages -->
+      <div class="text-danger" *ngIf="productName.touched && productName.invalid">
+        <small *ngIf="productName.errors?.['required']">Product Name is required.</small>
+        <small *ngIf="productName.errors?.['minlength']">Product Name must be at least 5 characters long.</small>
+        <small *ngIf="productName.errors?.['pattern']">Product Name can only contain letters and spaces.</small>
       </div>
-  
-      <div class="form-group">
-        <label for="price">Price</label>
-        <input type="number" id="price" class="form-control" [(ngModel)]="product.Price" name="price" required />
+    </div>
+
+    <!-- Price -->
+    <div class="form-group mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input
+        type="number"
+        id="price"
+        class="form-control"
+        [(ngModel)]="product.Price"
+        name="price"
+        required
+        #price="ngModel"
+        placeholder="Enter price"
+      />
+      <!-- Error Messages -->
+      <div class="text-danger" *ngIf="price.touched && price.invalid">
+        <small *ngIf="price.errors?.['required']">Price is required.</small>
       </div>
-  
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" class="form-control" [(ngModel)]="product.Description" name="description" required></textarea>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        class="form-control"
+        [(ngModel)]="product.Description"
+        name="description"
+        rows="4"
+        required
+        #description="ngModel"
+        placeholder="Enter product description"></textarea>
+      <!-- Error Messages -->
+      <div class="text-danger" *ngIf="description.touched && description.invalid">
+        <small *ngIf="description.errors?.['required']">Description is required.</small>
       </div>
-  
-      <div class="form-group">
-        <label for="stockQuantity">Stock Quantity</label>
-        <input type="number" id="stockQuantity" class="form-control" [(ngModel)]="product.StockQuantity" name="stockQuantity" required />
+    </div>
+
+    <!-- Stock Quantity -->
+    <div class="form-group mb-3">
+      <label for="stockQuantity" class="form-label">Stock Quantity</label>
+      <input
+        type="number"
+        id="stockQuantity"
+        class="form-control"
+        [(ngModel)]="product.StockQuantity"
+        name="stockQuantity"
+        required
+        #stockQuantity="ngModel"
+        placeholder="Enter stock quantity"
+      />
+      <!-- Error Messages -->
+      <div class="text-danger" *ngIf="stockQuantity.touched && stockQuantity.invalid">
+        <small *ngIf="stockQuantity.errors?.['required']">Stock Quantity is required.</small>
       </div>
-  
-      <div class="form-group">
-        <label for="categoryId">Category ID</label>
-        <input type="number" id="categoryId" class="form-control" [(ngModel)]="product.CategoryId" name="categoryId" required />
+    </div>
+
+    <!-- Category ID -->
+    <div class="form-group mb-3">
+      <label for="categoryId" class="form-label">Category ID</label>
+      <input
+        type="number"
+        id="categoryId"
+        class="form-control"
+        [(ngModel)]="product.CategoryId"
+        name="categoryId"
+        required
+        min="1"
+        max="5"
+        #categoryId="ngModel"
+        placeholder="Enter category ID"
+      />
+      <!-- Error Messages -->
+      <div class="text-danger" *ngIf="categoryId.touched && categoryId.invalid">
+        <small *ngIf="categoryId.errors?.['required']">Category ID is required.</small>
+        <small *ngIf="categoryId.errors?.['min'] || categoryId.errors?.['max']">
+          Category ID must be between 1 and 5.
+        </small>
       </div>
-  
-      <div class="form-group">
-        <label for="productImage">Product Image</label>
-        <input type="file" id="productImage" class="form-control" (change)="onFileSelect($event)" />
-      </div>
-  
-      <button type="submit" class="btn btn-primary mt-3">{{ isEditMode ? 'Update Product' : 'Add Product' }}</button>
-    </form>
+    </div>
+
+    <!-- Product Image Upload -->
+    <div class="form-group mb-3">
+      <label for="productImage" class="form-label">Product Image</label>
+      <input
+        type="file"
+        id="productImage"
+        required
+        class="form-control"
+        (change)="onFileSelect($event)"
+      />
+      <div class="text-danger" *ngIf="!product.ProductImage && productForm.touched">
+        Product Image is required.
+        
+    </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button
+        type="submit"
+        class="btn btn-primary px-4 py-2"
+        [disabled]="productForm.invalid">
+        {{ isEditMode ? 'Update Product' : 'Add Product' }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Back to Admin Panel -->
+  <div class="text-center mt-3">
+    <a href="admin-panel" class="text-decoration-none fw-bold">Go back to Admin panel</a>
   </div>
-  
+</div>

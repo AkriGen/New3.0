@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddressService } from '../services/address.service';
+import { ToastrServiceWrapper } from '../toastr.service';
 
 @Component({
   selector: 'app-address',
@@ -23,7 +24,7 @@ export class AddressComponent implements OnInit {
   isEditMode: boolean = false;
   addressToEdit: any = null;
 
-  constructor(private addressService: AddressService) {}
+  constructor(private addressService: AddressService, private toastr:ToastrServiceWrapper) {}
 
   ngOnInit(): void {
     // Fetch saved addresses when the component is initialized
@@ -33,6 +34,8 @@ export class AddressComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching saved addresses:', error);
+        this.toastr.error('Failed to fetch saved address', 'Error');
+
       }
     );
   }
@@ -51,6 +54,8 @@ export class AddressComponent implements OnInit {
         },
         (error) => {
           console.error('Error updating address:', error);
+          this.toastr.error('Failed to update your address', 'Error');
+
         }
       );
     } else {
@@ -62,6 +67,8 @@ export class AddressComponent implements OnInit {
         },
         (error) => {
           console.error('Error adding address:', error);
+          this.toastr.error('Failed to Add your address', 'Error');
+
         }
       );
     }

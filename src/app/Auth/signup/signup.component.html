@@ -1,3 +1,7 @@
+<body style=" background:rgb(0,0,0,0.1);">
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+
 <div class="signup-container">
   <h2>Sign Up</h2>
   <form [formGroup]="signupForm" (ngSubmit)="signup()">
@@ -13,8 +17,7 @@
         required
       />
       <div *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched" class="error">
-        Username is required and must be at least 3 characters.
-      </div>
+        Username must be 4-20 characters long and contain only alphabets.      </div>
     </div>
 
     <!-- Email -->
@@ -45,7 +48,8 @@
         required
       />
       <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="error">
-        Password must be at least 6 characters long.
+        'Password must be at least 8 characters long and include at least 1 uppercase letter, 1 lowercase letter, and 1 number.';
+        
       </div>
     </div>
 
@@ -65,17 +69,7 @@
       </div>
     </div>
 
-    <!-- Profile Image -->
-    <div class="form-group">
-      <label for="userImage">Profile Image</label>
-      <input
-        id="userImage"
-        type="file"
-        (change)="onFileSelected($event)"
-        accept="image/*"
-        class="form-control"
-      />
-    </div>
+    
 
     <!-- Error Messages -->
     <div *ngIf="validationErrors.length > 0" class="error-messages">
@@ -86,9 +80,11 @@
 
     <!-- Submit Button -->
     <button type="submit" [disabled]="signupForm.invalid" class="btn btn-primary">Sign Up</button>
-    <div>    <a href="login" class="text-center text-danger">Admin login>>></a>
+    <div class="mt-4">   <b> <a href="login" class="text-center text-danger">Admin login>>></a></b>
     </div>
-    <div>    <a href="userlogin" class="text-center text-success">UserLogin>>>>></a>
+    <div class="mt-2">   <b> <a href="userlogin" class="text-center text-success">UserLogin>>>>></a> </b>
     </div>
   </form>
 </div>
+</div>
+</body>
